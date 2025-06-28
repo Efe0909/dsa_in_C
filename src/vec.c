@@ -5,17 +5,28 @@
 
 #define UNUSED(x) (void)x
 
-void vecAppend(Vec_t *vec, int val) {
-    printf("not implemented yet\n");
-    UNUSED(vec);
-    UNUSED(val);
+/** 
+ * @return -1 in case of fail
+ */
+int vecAppend(Vec_t *vec, int val) {
+    if (vec->idx_max == vec->len_max) {
+        size_t new_cap = vec->len_max * 2;
+        int *tmp = realloc(vec->array, new_cap * sizeof *tmp);
+        if (!tmp) {
+            return -1;
+        }
+        vec->array   = tmp;
+        vec->len_max = new_cap;
+    }
+
+    vec->array[vec->idx_max++] = val;
+    return 0;
 }
 
-void vecCopy(Vec_t *vec, int *val, size_t len) {
-    printf("not implemented yet\n");
-    UNUSED(vec);
-    UNUSED(val);
-    UNUSED(len);
+void inline vecCopy(Vec_t *vec, int *val, size_t len) {
+    for (int i = 0; i < len; i++) {
+        val[i] = vec->array[i];
+    }
 }
 
 Vec_t* createVec(const int *array, ...) {

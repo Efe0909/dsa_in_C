@@ -8,10 +8,10 @@
 
 typedef struct Vec_t {
     int *array;
-    int len_max; // 8 16 32 64...
+    size_t len_max; // 8 16 32 64...
     int idx_max;
     // methods
-    void (*append)(struct Vec_t *vec, int val);
+    int (*append)(struct Vec_t *vec, int val);
 
     //copies the list to primitive array "target"
     void (*copy)(struct Vec_t *vec, int* target, size_t len); 
